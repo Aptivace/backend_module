@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Middleware\CheckAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [AdminController::class, "index"]);
+Route::get('/admin', [AdminController::class, "index"]);
 
-Route::post('/', [AdminController::class, "login"]);
+Route::post('/admin/login', [AdminController::class, "login"]);
+
+Route::middleware(CheckAdmin::class)->group(function () {
+    Route::prefix('/admin')->group(function () {
+        Route::post('/logout', [AdminController::class, "logout"]);
+        // Users
+        Route::patch('users/{user}', [AdminController::class, "update"]);
+    });
+});
+
+
 

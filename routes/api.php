@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -28,9 +30,11 @@ Route::middleware(\App\Http\Middleware\CheckUser::class)->group(function () {
     Route::patch('/posts/{post}', [PostController::class, 'update']);
     Route::delete('/posts/{post}', [PostController::class, 'destroy']);
 
-    Route::post('/posts/{post}/like', [\App\Http\Controllers\LikeController::class, 'store']);
-    Route::delete('/posts/{post}/like', [\App\Http\Controllers\LikeController::class, 'destroy']);
+    Route::post('/posts/{post}/like', [LikeController::class, 'store']);
+    Route::delete('/posts/{post}/like', [LikeController::class, 'destroy']);
 });
+
+Route::get('/user/{user}', [UserController::class, 'show']);
 
 
 Route::get ('/posts', [PostController::class, 'index']);

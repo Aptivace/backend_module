@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Панель администратора</title>
-    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('bootstrap/css/bootstrap.css')}}">
     <style>
         body {
             background-color: #f8f9fa;
@@ -27,19 +27,26 @@
         <h2 class="fw-bold text-primary">Авторизация администратора</h2>
         <p class="text-muted">Введите ваши учетные данные для доступа к панели управления</p>
     </div>
-    <form>
+    <form method="post" action="/admin/login">
         @csrf
         <div class="mb-3">
             <label for="email" class="form-label">Email адрес</label>
-            <input type="email" class="form-control" id="email" required placeholder="Введите почту">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Введите почту">
+            @error('email')
+            <span class="text-danger"> {{$message}} </span>
+            @enderror
         </div>
         <div class="mb-4">
             <label for="password" class="form-label">Пароль</label>
-            <input type="password" class="form-control" id="password" placeholder="Введите пароль" required>
-            <span class="text-danger"> Ошибка </span>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Введите пароль">
+            @error('password')
+            <span class="text-danger"> {{$message}} </span>
+            @enderror
         </div>
         <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">Войти в систему</button>
-        <span class="text-danger">Ошибка </span>
+        @error('error')
+        <span class="text-danger">{{$message}}}</span>
+        @enderror
     </form>
 </div>
 <script src="{{"bootstrap/js/bootstrap.bundle.min.js"}}"></script>
